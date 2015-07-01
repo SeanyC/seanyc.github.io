@@ -5,8 +5,12 @@ var FilmList = (function() {
 			addFilmButton = document.getElementById("addFilm");
 			addFilmButton.onclick = addFilm;
 		
-		
 			function addFilm() {
+				function insertFilm() {
+					films.push(new Film(title, director, year, rank));
+					films[films.length - 1].addToDOM();
+				}
+
 				var title = document.getElementById("title").value;
 				// Make sure there is at least a title.
 				if(!title) {
@@ -31,8 +35,8 @@ var FilmList = (function() {
 							}
 						}
 					}
-					films.push(new Film(title, director, year, rank));
-					films[films.length - 1].addToDOM();
+					insertFilm()
+					
 				} else {
 					rank = parseInt(rank);
 					if (isNaN(rank) || rank <= 0) {
@@ -48,8 +52,7 @@ var FilmList = (function() {
 							filmToChange.rank += 1;
 							var filmToChange = nextFilmToChange;
 						}
-						films.push(new Film(title, director, year, rank));
-						films[films.length - 1].addToDOM();
+					insertFilm()
 					}
 				}
 				
@@ -258,4 +261,5 @@ var FilmList = (function() {
 	}
 })();
 
-window.onload = FilmList.init;
+window.onload = FilmList.init
+
