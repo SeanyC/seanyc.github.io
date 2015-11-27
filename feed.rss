@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <rss version="2.0">
+<atom:link rel="self">http://seanyc.github.io/feed.rss</link>
 
 <channel>
   <title>Pizza</title>
   <link>http://lowbox.neocities.org/</link>
-  <atom:link rel="self">http://seanyc.github.io/feed.rss</link>
   <description>lowb baby</description>
   <item>
     <title>hello mr pizza</title>
