@@ -6,6 +6,12 @@
   <title>Pizza</title>
   <link>http://lowbox.neocities.org/</link>
   <description>lowb baby</description>
+    <item>
+    <title>new feed post</title>
+    <link>http://lowbox.neocities.org/new.html</link>
+    <guid>http://lowbox.neocities.org/new.html</guid>
+    <description>new link</description>
+  </item>
   <item>
     <title>hello mr pizza</title>
     <link>http://lowbox.neocities.org/index.html</link>
