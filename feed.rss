@@ -9,16 +9,19 @@
   <item>
     <title>hello mr pizza</title>
     <link>http://lowbox.neocities.org/index.html</link>
+    <guid>http://lowbox.neocities.org/index.html</guid>
     <description>round 1 ready fight</description>
   </item>
   <item>
     <title>goodbye freddy</title>
     <link>http://lowbox.neocities.org/test.html</link>
+    <guid>http://lowbox.neocities.org/test.html</guid>
     <description>probably a bad link</description>
   </item>
   <item>
     <title>hi hawaii</title>
     <link>http://lowbox.neocities.org/havai.html</link>
+    <guid>http://lowbox.neocities.org/havai.html</guid>
     <description>probably a solid link</description>
   </item>
 </channel>
