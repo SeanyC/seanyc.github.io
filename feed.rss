@@ -4,6 +4,7 @@
 <channel>
   <title>Pizza</title>
   <link>http://lowbox.neocities.org/</link>
+  <link rel="self">http://seanyc.github.io/feed.rss</link>
   <description>lowb baby</description>
   <item>
     <title>hello mr pizza</title>
