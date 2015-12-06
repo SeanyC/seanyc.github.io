@@ -7,6 +7,12 @@
   <link>http://lowbox.neocities.org/</link>
   <description>lowb baby</description>
   <item>
+    <title>test</title>
+    <link>http://seanyc.github.io/test</link>
+    <guid>http://seanyc.github.io/test</guid>
+    <description>hello hello?</description>
+  </item>
+  <item>
     <title>pushy</title>
     <link>http://seanyc.github.io/pushy</link>
     <guid>http://seanyc.github.io/pushy</guid>
@@ -23,24 +29,6 @@
     <link>http://seanyc.github.io/new-post</link>
     <guid>http://seanyc.github.io/new-post</guid>
     <description>hello hello hello hello</description>
-  </item>
-  <item>
-    <title>updated</title>
-    <link>http://seanyc.github.io/new</link>
-    <guid>http://seanyc.github.io/new</guid>
-    <description>hello hello</description>
-  </item>
-  <item>
-    <title>video games</title>
-    <link>http://seanyc.github.io/films</link>
-    <guid>http://seanyc.github.io/films</guid>
-    <description>vg all day</description>
-  </item>
-  <item>
-    <title>updated the feed</title>
-    <link>http://seanyc.github.io</link>
-    <guid>http://seanyc.github.io</guid>
-    <description>summary of the article</description>
   </item>
 </channel>
 
