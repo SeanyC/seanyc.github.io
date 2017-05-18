@@ -13,9 +13,37 @@ var FilmList = (function() {
 				}
 			})
 
+			var searchOnInput = debounce(searchForFilm, 250)
+			searchField.addEventListener('input', function(event) {
+				event.preventDefault()
+				searchOnInput()
+			})
+
+			function debounce(fn, ms) {
+				var handle
+				return function () {
+					clearTimeout(handle)
+					handle = setTimeout(function () {
+						fn()
+						handle = null
+					}, ms)
+				}
+			}
+
 			function searchForFilm() {
 				var input = document.getElementById('search').value
-				console.log(input)
+
+				function removeSuggestionDropDown() {
+					var suggestionDropDown = document.getElementById('suggestion-drop-down')
+					if (suggestionDropDown) {
+						suggestionDropDown.parentElement.removeChild(suggestionDropDown)
+					}
+				}
+
+				if (!input) {
+					removeSuggestionDropDown()
+					return
+				}
 
 				var url = 'http://www.omdbapi.com/?type=movie&s=' + input
 				var xhr = new XMLHttpRequest()
@@ -25,17 +53,33 @@ var FilmList = (function() {
 
 				function processResponse(e) {
 				  if (xhr.readyState == 4) {
-				    var results = JSON.parse(xhr.responseText).Search
-				    var suggestions = results.map((x) => {
-				    	return x.Title + ' (' + x.Year + ')'
+				    var response = JSON.parse(xhr.responseText)
+
+				    if (response.Response === "False") {
+				    	return false
+				    }
+
+				    var results = response.Search.slice(0,5).map((x) => {
+				    	return { 
+				    		display: x.Title + ' (' + x.Year + ')',
+				    		title: x.Title,
+				    		year: x.Year,
+				    		id: x.imdbID,
+				    		poster: x.Poster
+				    	}
 				    })
 
+				    removeSuggestionDropDown()
 				    var suggestionDropDown = document.createElement('div')
 				    suggestionDropDown.id = 'suggestion-drop-down'
-				    suggestionDropDown.innerHTML = '<ul><li>Fake Movie</li><li>Faker Movie.</li>'
-				    searchField.parentElement.appendChild(suggestionDropDown)
+				    var suggestionList = ''
 
-				    console.log(suggestions)
+				    for (i = 0, n = results.length; i < n; i++) {
+				    	suggestionList += '<li id=' + results[i].id + '>' + results[i].display + '</li>'
+				    }
+				    suggestionList = '<ul>' + suggestionList + '</ul>'
+				    suggestionDropDown.innerHTML = suggestionList
+				    searchField.parentElement.appendChild(suggestionDropDown)
 				  }
 				}
 			}
@@ -56,7 +100,7 @@ var FilmList = (function() {
 				var year = document.getElementById("year").value
 				var rank = document.getElementById("rank").value
 				
-				if (rank == null || rank == "" || rank == undefined) {
+				if (!rank) {
 					// Each Film object will be an indexed property of the films literal object.
 					// if the array is empty, the rank should be 1.
 					if (films.length == 0) {
@@ -78,8 +122,7 @@ var FilmList = (function() {
 						errorMessage("Rank must be a positive number.")
 						return
 					} else if (films.length == 0 || rank > films[films.length - 1].rank) {
-						films.push(new Film(title, director, year, rank))
-						films[films.length - 1].addToDOM()
+						insertFilm()
 					} else {
 						var filmToChange = getByRank(films, rank)
 						while (filmToChange) {
@@ -87,7 +130,7 @@ var FilmList = (function() {
 							filmToChange.rank += 1
 							var filmToChange = nextFilmToChange
 						}
-					insertFilm()
+						insertFilm()
 					}
 				}
 				
@@ -231,28 +274,26 @@ var FilmList = (function() {
 				}
 				
 				// finally, add links to move the item up or down.
-				var movementLinks = document.createElement("p")
-				movementLinks.className = "movement-links"
-				var moveUp = document.createElement("a")
-				moveUp.innerHTML = "&#8593\; move up"
-				moveUp.href = "#"
-				moveUp.onclick = function(event){
-					event.preventDefault()
-					currentFilmRank = event.target.parentElement.parentElement.value
-					filmObject = getByRank(films, currentFilmRank)
-					filmObject.move("up")
+				var movementLinks = document.createElement('p')
+				movementLinks.className = 'movement-links'
+
+				function createMoveLink(text,direction) {
+					var moveLink = document.createElement('a')
+					moveLink.innerHTML = text
+					moveLink.href = '#'
+					moveLink.onclick = function(event){
+						event.preventDefault()
+						currentFilmRank = event.target.parentElement.parentElement.value
+						filmObject = getByRank(films, currentFilmRank)
+						filmObject.move(direction)
+					}
+					movementLinks.appendChild(moveLink)
+					return moveLink
 				}
-				var moveDown = document.createElement("a")
-				moveDown.innerHTML = "&#8595\; move down"
-				moveDown.href ="#"
-				moveDown.onclick = function(event){
-					event.preventDefault()
-					currentFilmRank = event.target.parentElement.parentElement.value
-					filmObject = getByRank(films, currentFilmRank)
-					filmObject.move("down")
-				}
-				movementLinks.appendChild(moveUp)
-				movementLinks.appendChild(moveDown)
+
+				createMoveLink('&#8593\; move up', 'up')
+				createMoveLink('&#8595\; move down', 'down')
+
 				li.appendChild(movementLinks)
 			}
 			
@@ -297,4 +338,3 @@ var FilmList = (function() {
 })()
 
 window.onload = FilmList.init
-
