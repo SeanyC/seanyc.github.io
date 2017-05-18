@@ -25,11 +25,17 @@ var FilmList = (function() {
 
 				function processResponse(e) {
 				  if (xhr.readyState == 4) {
-				    var results = JSON.parse(xhr.responseText).Search.map((x) => {
+				    var results = JSON.parse(xhr.responseText).Search
+				    var suggestions = results.map((x) => {
 				    	return x.Title + ' (' + x.Year + ')'
 				    })
 
-				    console.log(results)
+				    var suggestionDropDown = document.createElement('div')
+				    suggestionDropDown.id = 'suggestion-drop-down'
+				    suggestionDropDown.innerHTML = '<ul><li>Fake Movie</li><li>Faker Movie.</li>'
+				    searchField.parentElement.appendChild(suggestionDropDown)
+
+				    console.log(suggestions)
 				  }
 				}
 			}

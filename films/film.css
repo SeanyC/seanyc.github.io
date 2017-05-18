@@ -1,5 +1,6 @@
-body {
-	font-family: Helvetica, Ariel, sans-serif;
+body, input {
+	font-size: 13px;
+	font-family: Helvetica, Arial, sans-serif;
 }
 h1 {
 	margin-bottom: 0;
@@ -16,6 +17,7 @@ form label {
 	text-align: right;
 }
 form input {
+	padding: 5px 10px;
 	display: table-cell;
 }
 p.button {
@@ -45,4 +47,23 @@ p.alert {
 	padding: 3px;
 	width: 50%;
 	min-width: 300px;
+}
+#suggestion-drop-down {
+	border: 1px solid rgb(238, 238, 238);
+	border-top: none;
+	background-color: white;
+	width: 239px;
+	position: absolute;
+}
+#suggestion-drop-down ul {
+	margin: 0;
+	padding: 0;
+	list-style-type: none;
+}
+#suggestion-drop-down li {
+	line-height: 22px;
+	padding: 5px 10px;
+}
+#suggestion-drop-down li:hover {
+	background-color: #eee;
 }
