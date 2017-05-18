@@ -2,8 +2,37 @@ var FilmList = (function() {
 	return {
 		init: function() {
 			var films = []
-			addFilmButton = document.getElementById("addFilm")
+			var addFilmButton = document.getElementById("addFilm")
 			addFilmButton.onclick = addFilm
+
+			var searchField = document.getElementById('search')
+			searchField.addEventListener('keyup', function(event) {
+				event.preventDefault()
+				if (event.keyCode == 13) {
+					searchForFilm()
+				}
+			})
+
+			function searchForFilm() {
+				var input = document.getElementById('search').value
+				console.log(input)
+
+				var url = 'http://www.omdbapi.com/?type=movie&s=' + input
+				var xhr = new XMLHttpRequest()
+				xhr.open('GET', url)
+				xhr.send()
+				xhr.addEventListener('readystatechange', processResponse, false)
+
+				function processResponse(e) {
+				  if (xhr.readyState == 4) {
+				    var results = JSON.parse(xhr.responseText).Search.map((x) => {
+				    	return x.Title + ' (' + x.Year + ')'
+				    })
+
+				    console.log(results)
+				  }
+				}
+			}
 		
 			function addFilm() {
 				function insertFilm() {
