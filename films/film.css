@@ -7,18 +7,25 @@ h1 {
 }
 form {
 	display: table;
-	border-spacing: 5px;
+	border-spacing: 0px;
+}
+form fieldset {
+	padding:10px;
 }
 form p {
 	display: table-row;
 }
 form label {
 	display: table-cell;
+	margin: 5px 10px;
+	padding: 0px;
+	padding-left: 10px;
 	text-align: right;
 }
 form input {
-	padding: 5px 10px;
 	display: table-cell;
+	margin: 5px 10px;
+	padding: 5px 10px;
 }
 p.button {
 	text-align: right;
