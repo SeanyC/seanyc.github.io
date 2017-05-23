@@ -1,6 +1,7 @@
 var FilmList = (function() {
 	return {
 		init: function() {
+			console.log('Please set a FilmList.apikey value.')
 			var films = []
 			var addFilmButton = document.getElementById("addFilm")
 			addFilmButton.onclick = addFilm
@@ -45,7 +46,7 @@ var FilmList = (function() {
 					return
 				}
 
-				var url = 'http://www.omdbapi.com/?type=movie&s=' + input
+				var url = 'http://www.omdbapi.com/?apikey=' + FilmList.apikey + '&type=movie&s=' + input
 				var xhr = new XMLHttpRequest()
 				xhr.open('GET', url)
 				xhr.send()
