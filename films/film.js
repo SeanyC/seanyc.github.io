@@ -3,7 +3,7 @@ var FilmList = (function() {
 		init: function() {
 			console.log('Please set a FilmList.apikey value.')
 			var films = []
-			var addFilmButton = document.getElementById("addFilm")
+			var addFilmButton = document.getElementById('addFilm')
 			addFilmButton.onclick = addFilm
 
 			var searchField = document.getElementById('search')
@@ -22,11 +22,11 @@ var FilmList = (function() {
 
 			function debounce(fn, ms) {
 				var handle
-				return function () {
+				return () => {
 					if (handle) {
 						clearTimeout(handle)
 					}
-					handle = setTimeout(function () {
+					handle = setTimeout(() => {
 						fn()
 						handle = null
 					}, ms)
@@ -58,7 +58,7 @@ var FilmList = (function() {
 				  if (xhr.readyState == 4) {
 				    var response = JSON.parse(xhr.responseText)
 
-				    if (response.Response === "False") {
+				    if (response.Response === 'False') {
 				    	return false
 				    }
 				    console.log(response.Search)
@@ -82,8 +82,7 @@ var FilmList = (function() {
 				    	let currentListItem = document.createElement('li')
 				    	currentListItem.id = currentFilm.id
 				    	currentListItem.innerText = currentFilm.display
-				    	currentListItem.addEventListener('click',
-				    		function () {
+				    	currentListItem.addEventListener('click', () => {
 				    			removeSuggestionDropDown()
 								var fields = {
 									title: document.getElementById('title'),
@@ -122,15 +121,15 @@ var FilmList = (function() {
 					films[films.length - 1].addToDOM()
 				}
 
-				var title = document.getElementById("title").value
+				var title = document.getElementById('title').value
 				// Make sure there is at least a title.
 				if(!title) {
-					errorMessage("You need a title.")
+					errorMessage('You need a title.')
 					return
 				}
-				var director = document.getElementById("director").value
-				var year = document.getElementById("year").value
-				var rank = document.getElementById("rank").value
+				var director = document.getElementById('director').value
+				var year = document.getElementById('year').value
+				var rank = document.getElementById('rank').value
 				
 				if (!rank) {
 					// Each Film object will be an indexed property of the films literal object.
@@ -151,7 +150,7 @@ var FilmList = (function() {
 				} else {
 					rank = parseInt(rank)
 					if (isNaN(rank) || rank <= 0) {
-						errorMessage("Rank must be a positive number.")
+						errorMessage('Rank must be a positive number.')
 						return
 					} else if (films.length == 0 || rank > films[films.length - 1].rank) {
 						insertFilm()
@@ -185,13 +184,13 @@ var FilmList = (function() {
 			// method to move the film after it has been inserted
 			Film.prototype.move = function(direction) {
 				
-				list = document.getElementById("list")
-				filmElement = document.querySelector("li[value=\"" + this.rank + "\"]")
+				list = document.getElementById('list')
+				filmElement = document.querySelector('li[value="' + this.rank + '"]')
 				
 				// move the element down in the DOM
-				if (direction == "down") {
+				if (direction == 'down') {
 					// get the next element.
-					nextFilmElement = getElementSibling(filmElement, "nextSibling")
+					nextFilmElement = getElementSibling(filmElement, 'nextSibling')
 					// if there is a next element to retrieve, get the object with rank exactly one more than the event target.
 					if (nextFilmElement) {
 						var nextFilmObj = getByRank(films, this.rank+1)
@@ -219,7 +218,7 @@ var FilmList = (function() {
 				// move the element up in the DOM
 				} else if (filmElement.value != 1) {
 					// get the previous element.
-					previousFilmElement = getElementSibling(filmElement, "previousSibling")
+					previousFilmElement = getElementSibling(filmElement, 'previousSibling')
 					// if there is a previous element to retrieve, get the object with rank exactly one less than the event target.
 					if (previousFilmElement) {
 						var previousFilmObj = getByRank(films, this.rank-1)
@@ -246,16 +245,16 @@ var FilmList = (function() {
 		
 			// method to add the object data to the DOM added the the prototype of Film.
 			Film.prototype.addToDOM = function() {
-				list = document.getElementById("list")
-				li = document.createElement("li")
+				list = document.getElementById('list')
+				li = document.createElement('li')
 				li.innerHTML = this.title
 				
 				// make the number in the ordered list the proper rank.
 				li.value = this.rank
 				
 				// if there is a year, add it in parenthesis to the title.
-				if (this.year != undefined && this.year != null && this.year != "") {
-					li.innerHTML += " (" + this.year + ")"
+				if (this.year != undefined && this.year != null && this.year != '') {
+					li.innerHTML += ' (' + this.year + ')'
 				}
 				// check rank before inserting the list item into the DOM
 				// If its the highest numerical rank, just add it to the end of the list.
@@ -264,7 +263,7 @@ var FilmList = (function() {
 					
 				// if the rank is 1, insert at the top of the list and increase the rank of each item beneath.
 				} else if (this.rank == 1) {
-					listItems = document.querySelectorAll("#list li")
+					listItems = document.querySelectorAll('#list li')
 					var valueCheck = 1
 					for (var p in listItems) {
 						if (listItems[p].value != valueCheck) {
@@ -276,7 +275,7 @@ var FilmList = (function() {
 					list.insertBefore(li, list.firstChild)
 				// Otherwise, increase the rank of each item beneath, and add in the appropriate slot.
 				} else {
-					listItems = document.querySelectorAll("#list li")
+					listItems = document.querySelectorAll('#list li')
 					var valueCheck = this.rank
 					for (var p in listItems) {
 						if (listItems[p].value > valueCheck + 1) {
@@ -297,11 +296,11 @@ var FilmList = (function() {
 				}
 				
 				// if there is a director, add it to the next line of the list item.
-				if (this.director != undefined && this.director != null && this.director != "") {
-					director = document.createElement("span")
-					director.className = "director"
-					director.innerHTML = "directed by " + this.director
-					li.appendChild(document.createElement("br"))
+				if (this.director != undefined && this.director != null && this.director != '') {
+					director = document.createElement('span')
+					director.className = 'director'
+					director.innerHTML = 'directed by ' + this.director
+					li.appendChild(document.createElement('br'))
 					li.appendChild(director)
 				}
 				
@@ -346,7 +345,7 @@ var FilmList = (function() {
 			
 			// function produces an error messag within the DOM instead of an alert dialog box.
 			function errorMessage(message) {
-				var element = document.querySelector("p.alert")
+				var element = document.querySelector('p.alert')
 				element.innerHTML = message
 				element.style.backgroundColor = 'red'
 				var op = 1;  // initial opacity
@@ -360,7 +359,7 @@ var FilmList = (function() {
 							element.style.backgroundColor = 'white'
 						}
 						element.style.opacity = op
-						element.style.filter = 'alpha(opacity=' + op * 100 + ")"
+						element.style.filter = 'alpha(opacity=' + op * 100 + ')'
 						op -= op * 0.1
 					}, 50)
 				}, 750)
