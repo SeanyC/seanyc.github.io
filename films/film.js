@@ -7,12 +7,6 @@ var FilmList = (function() {
 			addFilmButton.onclick = addFilm
 
 			var searchField = document.getElementById('search')
-			searchField.addEventListener('keyup', function(event) {
-				event.preventDefault()
-				if (event.keyCode == 13) {
-					searchForFilm()
-				}
-			})
 
 			var searchOnInput = debounce(searchForFilm, 250)
 			searchField.addEventListener('input', function(event) {
