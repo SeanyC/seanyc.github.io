@@ -23,7 +23,9 @@ var FilmList = (function() {
 			function debounce(fn, ms) {
 				var handle
 				return function () {
-					clearTimeout(handle)
+					if (handle) {
+						clearTimeout(handle)
+					}
 					handle = setTimeout(function () {
 						fn()
 						handle = null
@@ -59,7 +61,7 @@ var FilmList = (function() {
 				    if (response.Response === "False") {
 				    	return false
 				    }
-
+				    console.log(response.Search)
 				    var results = response.Search.slice(0,5).map((x) => {
 				    	return { 
 				    		display: x.Title + ' (' + x.Year + ')',
@@ -73,13 +75,42 @@ var FilmList = (function() {
 				    removeSuggestionDropDown()
 				    var suggestionDropDown = document.createElement('div')
 				    suggestionDropDown.id = 'suggestion-drop-down'
-				    var suggestionList = ''
+				    var suggestionList = document.createElement('ul')
 
 				    for (i = 0, n = results.length; i < n; i++) {
-				    	suggestionList += '<li id=' + results[i].id + '>' + results[i].display + '</li>'
+						let currentFilm = results[i]
+				    	let currentListItem = document.createElement('li')
+				    	currentListItem.id = currentFilm.id
+				    	currentListItem.innerText = currentFilm.display
+				    	currentListItem.addEventListener('click',
+				    		function () {
+				    			removeSuggestionDropDown()
+								var fields = {
+									title: document.getElementById('title'),
+									director: document.getElementById('director'),
+									year: document.getElementById('year')
+								}
+								fields.title.value = currentFilm.title
+								fields.year.value = currentFilm.year
+
+								var url = 'http://www.omdbapi.com/?apikey=' + FilmList.apikey + '&i=' + currentFilm.id
+								var xhr = new XMLHttpRequest()
+								xhr.open('GET', url)
+								xhr.send()
+								xhr.addEventListener('readystatechange', processResponse, false)
+
+								function processResponse(e) {
+								  if (xhr.readyState == 4) {
+								    var director = JSON.parse(xhr.responseText).Director
+								    fields.director.value = director
+								  }
+								}
+							}
+				    	)
+				    	suggestionList.appendChild(currentListItem)
 				    }
-				    suggestionList = '<ul>' + suggestionList + '</ul>'
-				    suggestionDropDown.innerHTML = suggestionList
+				    suggestionDropDown.appendChild(suggestionList)
+
 				    searchField.parentElement.appendChild(suggestionDropDown)
 				  }
 				}
