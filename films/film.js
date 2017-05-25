@@ -8,7 +8,7 @@ var FilmList = {
 		var searchField = document.getElementById('search')
 
 		var searchOnInput = debounce(searchForFilm, 250)
-		searchField.addEventListener('input', function(event) {
+		searchField.addEventListener('input', (event) => {
 			event.preventDefault()
 			searchOnInput()
 		})
@@ -158,7 +158,7 @@ var FilmList = {
 			}
 			
 			// make sure the array is sorted by rank after each addition.
-			films.sort(function(a, b){
+			films.sort((a, b) => {
 				return a.rank-b.rank
 			})
 		}
@@ -174,7 +174,7 @@ var FilmList = {
 		}
 	
 		// method to move the film after it has been inserted
-		Film.prototype.move = function(direction) {
+		Film.prototype.move = function (direction) {
 			
 			var list = document.getElementById('list')
 			var filmElement = document.querySelector('li[value="' + this.rank + '"]')
@@ -230,15 +230,15 @@ var FilmList = {
 			}
 			
 			// make sure the array is properly sorted.
-			films.sort(function(a, b){
+			films.sort((a, b) => {
 				return a.rank-b.rank
 			})
 		}
 	
 		// method to add the object data to the DOM added the the prototype of Film.
-		Film.prototype.addToDOM = function() {
-			list = document.getElementById('list')
-			li = document.createElement('li')
+		Film.prototype.addToDOM = function () {
+			var list = document.getElementById('list')
+			var li = document.createElement('li')
 			li.innerHTML = this.title
 			
 			// make the number in the ordered list the proper rank.
@@ -304,7 +304,7 @@ var FilmList = {
 				var moveLink = document.createElement('a')
 				moveLink.innerHTML = text
 				moveLink.href = '#'
-				moveLink.onclick = function(event){
+				moveLink.onclick = (event) => {
 					event.preventDefault()
 					currentFilmRank = event.target.parentElement.parentElement.value
 					var filmObject = getByRank(films, currentFilmRank)
@@ -344,8 +344,8 @@ var FilmList = {
 			element.style.opacity = 1
 			
 			// setTimeout waits 3/4s of a second then slowly fades the p.alert element out using setInterval.
-			setTimeout(function() {
-				var timer = setInterval(function() {
+			setTimeout(() => {
+				var timer = setInterval(() => {
 					if (op <= 0.01) {
 						clearInterval(timer)
 						element.style.backgroundColor = 'white'
