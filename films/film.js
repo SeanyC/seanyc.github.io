@@ -55,7 +55,7 @@ var FilmList = (function() {
 				    if (response.Response === 'False') {
 				    	return false
 				    }
-				    console.log(response.Search)
+
 				    var results = response.Search.slice(0,5).map((x) => {
 				    	return { 
 				    		display: x.Title + ' (' + x.Year + ')',
@@ -77,29 +77,28 @@ var FilmList = (function() {
 				    	currentListItem.id = currentFilm.id
 				    	currentListItem.innerText = currentFilm.display
 				    	currentListItem.addEventListener('click', () => {
-				    			removeSuggestionDropDown()
-								var fields = {
-									title: document.getElementById('title'),
-									director: document.getElementById('director'),
-									year: document.getElementById('year')
-								}
-								fields.title.value = currentFilm.title
-								fields.year.value = currentFilm.year
-
-								var url = 'http://www.omdbapi.com/?apikey=' + FilmList.apikey + '&i=' + currentFilm.id
-								var xhr = new XMLHttpRequest()
-								xhr.open('GET', url)
-								xhr.send()
-								xhr.addEventListener('readystatechange', processResponse, false)
-
-								function processResponse(e) {
-								  if (xhr.readyState == 4) {
-								    var director = JSON.parse(xhr.responseText).Director
-								    fields.director.value = director
-								  }
-								}
+			    			removeSuggestionDropDown()
+							var fields = {
+								title: document.getElementById('title'),
+								director: document.getElementById('director'),
+								year: document.getElementById('year')
 							}
-				    	)
+							fields.title.value = currentFilm.title
+							fields.year.value = currentFilm.year
+
+							var url = 'http://www.omdbapi.com/?apikey=' + FilmList.apikey + '&i=' + currentFilm.id
+							var xhr = new XMLHttpRequest()
+							xhr.open('GET', url)
+							xhr.send()
+							xhr.addEventListener('readystatechange', processResponse, false)
+
+							function processResponse(e) {
+							  if (xhr.readyState == 4) {
+							    var director = JSON.parse(xhr.responseText).Director
+							    fields.director.value = director
+							  }
+							}
+						})
 				    	suggestionList.appendChild(currentListItem)
 				    }
 				    suggestionDropDown.appendChild(suggestionList)
