@@ -26,6 +26,12 @@ var FilmList = {
 			}
 		}
 
+		function sortByRank() {
+			films.sort((a, b) => {
+				return a.rank-b.rank
+			})
+		}
+
 		function searchForFilm() {
 			var input = document.getElementById('search').value
 
@@ -158,9 +164,7 @@ var FilmList = {
 			}
 			
 			// make sure the array is sorted by rank after each addition.
-			films.sort((a, b) => {
-				return a.rank-b.rank
-			})
+			sortByRank()
 		}
 	
 		//constructor for individual films, as we will make multiple
@@ -230,9 +234,7 @@ var FilmList = {
 			}
 			
 			// make sure the array is properly sorted.
-			films.sort((a, b) => {
-				return a.rank-b.rank
-			})
+			sortByRank()
 		}
 	
 		// method to add the object data to the DOM added the the prototype of Film.
