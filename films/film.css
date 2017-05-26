@@ -1,86 +1,86 @@
 body, input {
-	font-size: 13px;
-	font-family: Helvetica, Arial, sans-serif;
+  font-size: 13px;
+  font-family: Helvetica, Arial, sans-serif;
 }
 h1 {
-	margin-bottom: 0;
+  margin-bottom: 0;
 }
 form {
-	display: table;
-	border-spacing: 0px;
+  display: table;
+  border-spacing: 0px;
 }
 form fieldset {
-	padding:10px;
-	border: 1px solid rgb(192,192,192);
+  padding:10px;
+  border: 1px solid rgb(192,192,192);
 }
 form p {
-	display: table-row;
+  display: table-row;
 }
 form label {
-	display: table-cell;
-	margin: 6px 10px;
-	padding: 0px;
-	padding-left: 10px;
-	text-align: right;
+  display: table-cell;
+  margin: 6px 10px;
+  padding: 0px;
+  padding-left: 10px;
+  text-align: right;
 }
 form input {
-	display: table-cell;
-	margin: 6px 10px;
-	padding: 6px 10px;
-	border: 1px solid rgb(192,192,192);
+  display: table-cell;
+  margin: 6px 10px;
+  padding: 6px 10px;
+  border: 1px solid rgb(192,192,192);
 }
 p.button {
-	text-align: right;
+  text-align: right;
 }
 p.button input {
-	background-color: white;
+  background-color: white;
 }
 #favorites {
-	font-size: 16px;
+  font-size: 16px;
 }
 span.comment {
-	font-size: 80%;
-	color: #777777;
+  font-size: 80%;
+  color: #777777;
 }
 span.tags {
-	font-size: 80%;
-	color: rgb(48, 99, 170);
+  font-size: 80%;
+  color: rgb(48, 99, 170);
 }
 .movement-links {
-	margin-top: 0;
-	font-size: .75em;
+  margin-top: 0;
+  font-size: .75em;
 }
 .movement-links a {
-	padding-right: 10px;
+  padding-right: 10px;
 }
 p.alert {
-	position: relative;
-	color: white;
-	background-color: white;
-	opacity: 1;
-	margin: 3px;
-	padding: 3px;
-	width: 50%;
-	min-width: 300px;
+  position: relative;
+  color: white;
+  background-color: white;
+  opacity: 1;
+  margin: 3px;
+  padding: 3px;
+  width: 50%;
+  min-width: 300px;
 }
 
 #suggestion-drop-down {
-	position: absolute;
-	margin: -5px 10px;
-	width: 239px;
-	border: 1px solid rgb(238, 238, 238);
-	border-top: none;
-	background-color: white;
+  position: absolute;
+  margin: -5px 10px;
+  width: 239px;
+  border: 1px solid rgb(238, 238, 238);
+  border-top: none;
+  background-color: white;
 }
 #suggestion-drop-down ul {
-	margin: 0;
-	padding: 0;
-	list-style-type: none;
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
 }
 #suggestion-drop-down li {
-	line-height: 22px;
-	padding: 5px 10px;
+  line-height: 22px;
+  padding: 5px 10px;
 }
 #suggestion-drop-down li:hover {
-	background-color: #eee;
+  background-color: #eee;
 }
