@@ -117,6 +117,11 @@ var FilmList = {
       function insertFilm() {
         films.push(new Film(title, director, year, rank))
         films[films.length - 1].addToDOM()
+        var addFields = document.querySelectorAll('.add-field')
+        for (var i = 0, n = addFields.length; i < n; i++) {
+        	addFields[i].placeholder = ''
+        	addFields[i].value = ''
+        }
       }
 
       var title = document.getElementById('title').value
@@ -324,7 +329,7 @@ var FilmList = {
     
     // simple function for finding the correct object in the films array.
     function getByRank(theArray, value) {
-      for (var i=0; i < theArray.length; i++) {
+      for (var i = 0; i < theArray.length; i++) {
         if (theArray[i].rank == value) return theArray[i]
       }
     }
