@@ -14,7 +14,7 @@ var FilmList = {
     })
 
     function debounce(fn, ms) {
-      var handle
+      let handle
       return () => {
         if (handle) {
           clearTimeout(handle)
@@ -33,13 +33,20 @@ var FilmList = {
     }
 
     function searchForFilm() {
-      var input = document.getElementById('search').value
+      let input = document.getElementById('search').value
 
       function removeSuggestionDropDown() {
-        var suggestionDropDown = document.getElementById('suggestion-drop-down')
+        let suggestionDropDown = document.getElementById('suggestion-drop-down')
         if (suggestionDropDown) {
           suggestionDropDown.parentElement.removeChild(suggestionDropDown)
         }
+      }
+
+      function request(url, callback) {
+        let xhr = new XMLHttpRequest()
+        xhr.open('GET', url)
+        xhr.send()
+        xhr.addEventListener('readystatechange', callback.bind(xhr), false)
       }
 
       if (!input) {
@@ -47,21 +54,18 @@ var FilmList = {
         return
       }
 
-      var url = 'http://www.omdbapi.com/?apikey=' + FilmList.apikey + '&type=movie&s=' + input
-      var xhr = new XMLHttpRequest()
-      xhr.open('GET', url)
-      xhr.send()
-      xhr.addEventListener('readystatechange', processResponse, false)
+      let url = 'http://www.omdbapi.com/?apikey=' + FilmList.apikey + '&type=movie&s=' + input
+      request(url, processResponse)
 
       function processResponse(e) {
-        if (xhr.readyState == 4) {
-          var response = JSON.parse(xhr.responseText)
+        if (this.readyState == 4) {
+          let response = JSON.parse(this.responseText)
 
           if (response.Response === 'False') {
             return false
           }
 
-          var results = response.Search.slice(0,5).map((x) => {
+          let results = response.Search.slice(0,5).map((x) => {
             return { 
               display: x.Title + ' (' + x.Year + ')',
               title: x.Title,
@@ -72,42 +76,37 @@ var FilmList = {
           })
 
           removeSuggestionDropDown()
-          var suggestionDropDown = document.createElement('div')
+          let suggestionDropDown = document.createElement('div')
           suggestionDropDown.id = 'suggestion-drop-down'
-          var suggestionList = document.createElement('ul')
+          let suggestionList = document.createElement('ul')
 
           for (i = 0, n = results.length; i < n; i++) {
-          let currentFilm = results[i]
+            let currentFilm = results[i]
             let currentListItem = document.createElement('li')
             currentListItem.id = currentFilm.id
             currentListItem.innerText = currentFilm.display
             currentListItem.addEventListener('click', () => {
               removeSuggestionDropDown()
-            var fields = {
-              title: document.getElementById('title'),
-              director: document.getElementById('director'),
-              year: document.getElementById('year')
-            }
-            fields.title.value = currentFilm.title
-            fields.year.value = currentFilm.year
-
-            var url = 'http://www.omdbapi.com/?apikey=' + FilmList.apikey + '&i=' + currentFilm.id
-            var xhr = new XMLHttpRequest()
-            xhr.open('GET', url)
-            xhr.send()
-            xhr.addEventListener('readystatechange', processResponse, false)
-
-            function processResponse(e) {
-              if (xhr.readyState == 4) {
-                var director = JSON.parse(xhr.responseText).Director
-                fields.director.value = director
+              let fields = {
+                title: document.getElementById('title'),
+                director: document.getElementById('director'),
+                year: document.getElementById('year')
               }
-            }
-          })
+              fields.title.value = currentFilm.title
+              fields.year.value = currentFilm.year
+
+              let url = 'http://www.omdbapi.com/?apikey=' + FilmList.apikey + '&i=' + currentFilm.id
+              request(url, processResponse)
+              function processResponse(e) {
+                if (filmDetailsRequest.readyState == 4) {
+                  var director = JSON.parse(filmDetailsRequest.responseText).Director
+                  fields.director.value = director
+                }
+              }
+            })
             suggestionList.appendChild(currentListItem)
           }
           suggestionDropDown.appendChild(suggestionList)
-
           searchField.parentElement.appendChild(suggestionDropDown)
         }
       }
@@ -119,8 +118,8 @@ var FilmList = {
         films[films.length - 1].addToDOM()
         var addFields = document.querySelectorAll('.add-field')
         for (var i = 0, n = addFields.length; i < n; i++) {
-        	addFields[i].placeholder = ''
-        	addFields[i].value = ''
+          addFields[i].placeholder = ''
+          addFields[i].value = ''
         }
       }
 
