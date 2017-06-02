@@ -98,8 +98,8 @@ var FilmList = {
               let url = 'http://www.omdbapi.com/?apikey=' + FilmList.apikey + '&i=' + currentFilm.id
               request(url, processResponse)
               function processResponse(e) {
-                if (filmDetailsRequest.readyState == 4) {
-                  var director = JSON.parse(filmDetailsRequest.responseText).Director
+                if (this.readyState == 4) {
+                  var director = JSON.parse(this.responseText).Director
                   fields.director.value = director
                 }
               }
