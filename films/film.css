@@ -47,12 +47,17 @@ span.tags {
   color: rgb(48, 99, 170);
 }
 .movement-links {
+  visibility: hidden;
   margin-top: 0;
   font-size: .75em;
 }
 .movement-links a {
   padding-right: 10px;
 }
+#list li:hover > .movement-links {
+  visibility: visible; 
+}
+
 p.alert {
   position: relative;
   color: white;
