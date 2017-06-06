@@ -75,35 +75,48 @@ var FilmList = {
           let suggestionList = document.createElement('ul')
 
           for (i = 0, n = results.length; i < n; i++) {
-            let currentFilm = results[i]
-            let currentListItem = document.createElement('li')
-            currentListItem.id = currentFilm.id
-            currentListItem.innerText = currentFilm.display
-            currentListItem.addEventListener('click', () => {
-              removeSuggestionDropDown()
-              let fields = {
-                title: document.getElementById('title'),
-                director: document.getElementById('director'),
-                year: document.getElementById('year')
-              }
-              fields.title.value = currentFilm.title
-              fields.year.value = currentFilm.year
-
-              let url = 'http://www.omdbapi.com/?apikey=' + FilmList.apikey + '&i=' + currentFilm.id
-              request(url, processResponse)
-              function processResponse(e) {
-                if (this.readyState == 4) {
-                  var director = JSON.parse(this.responseText).Director
-                  fields.director.value = director
-                }
-              }
-            })
+            let currentListItem = results[i].createListItem()
             suggestionList.appendChild(currentListItem)
           }
           suggestionDropDown.appendChild(suggestionList)
           searchField.parentElement.appendChild(suggestionDropDown)
         }
       }
+
+      var Suggestion = function Suggestion(title, year, id, poster) {
+        this.display = title + ' (' + year + ')'
+        this.title = title
+        this.year = year
+        this.id = id
+        this.poster = poster
+      }
+
+      Suggestion.prototype.createListItem = function createListItem() {
+        let listItem = document.createElement('li')
+        listItem.id = this.id
+        listItem.innerText = this.display
+
+        listItem.addEventListener('click', () => {
+          removeSuggestionDropDown()
+          let fields = {
+            title: document.getElementById('title'),
+            director: document.getElementById('director'),
+            year: document.getElementById('year')
+          }
+          fields.title.value = this.title
+          fields.year.value = this.year
+
+          let url = 'http://www.omdbapi.com/?apikey=' + FilmList.apikey + '&i=' + this.id
+          request(url, processResponse)
+          function processResponse(e) {
+            if (this.readyState == 4) {
+              var director = JSON.parse(this.responseText).Director
+              fields.director.value = director
+            }
+          }
+        })
+        return listItem
+      }    
     }
   
     function addFilm() {
@@ -318,14 +331,6 @@ var FilmList = {
       createMoveLink('&#8595; move down', 'down')
 
       li.appendChild(movementLinks)
-    }
-
-    var Suggestion = function Suggestion(title, year, id, poster) {
-      this.display = title + ' (' + year + ')'
-      this.title = title
-      this.year = year
-      this.id = id
-      this.poster = poster
     }
     
     // simple function for finding the correct object in the films array.
