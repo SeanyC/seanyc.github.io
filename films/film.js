@@ -66,13 +66,7 @@ var FilmList = {
           }
 
           let results = response.Search.slice(0,5).map((x) => {
-            return { 
-              display: x.Title + ' (' + x.Year + ')',
-              title: x.Title,
-              year: x.Year,
-              id: x.imdbID,
-              poster: x.Poster
-            }
+            return new Suggestion(x.Title, x.Year, x.imdbID, x.Poster)
           })
 
           removeSuggestionDropDown()
@@ -172,7 +166,7 @@ var FilmList = {
     }
   
     // constructor for individual films, as we will make multiple
-    function Film(title, director, year, rank) {
+    var Film = function Film(title, director, year, rank) {
       // nothing fancy for property initialization.
       // You could do a check to see if title was falsey, but we check it when we click the add button instead.
       this.title = title
@@ -324,6 +318,14 @@ var FilmList = {
       createMoveLink('&#8595; move down', 'down')
 
       li.appendChild(movementLinks)
+    }
+
+    var Suggestion = function Suggestion(title, year, id, poster) {
+      this.display = title + ' (' + year + ')'
+      this.title = title
+      this.year = year
+      this.id = id
+      this.poster = poster
     }
     
     // simple function for finding the correct object in the films array.
