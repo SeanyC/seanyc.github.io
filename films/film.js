@@ -194,21 +194,23 @@ var FilmList = {
   
     // method to move the film after it has been inserted
     Film.prototype.move = function (direction) {
-      
       var list = document.getElementById('list')
       var filmElement = document.querySelector('li[value="' + this.rank + '"]')
       
-      // move the element down in the DOM
-      if (direction == 'down') {
+      if (direction === 'delete') {
+        filmElement.parentElement.removeChild(filmElement)
+        let filmIndex = getByRank(films, this.rank, 'index')
+        films.splice(filmIndex, 1)
+      } else if (direction === 'down') { // move the element down in the DOM
         // get the next element.
         nextFilmElement = getElementSibling(filmElement, 'nextSibling')
         // if there is a next element to retrieve, get the object with rank exactly one more than the event target.
         if (nextFilmElement) {
-          var nextFilmObj = getByRank(films, this.rank+1)
+          var nextFilmObj = getByRank(films, this.rank + 1)
           // if the object exists, decrease its rank by 1, and rearrange the elements.
           if (nextFilmObj) {
             nextFilmObj.rank -= 1
-            if (nextFilmElement.value == this.rank+1) {
+            if (nextFilmElement.value == this.rank + 1) {
               // get the element after the next element, because we are using insertBefore.
               secondSibling = nextFilmElement.nextSibling
               list.removeChild(filmElement)
@@ -321,6 +323,9 @@ var FilmList = {
         var moveLink = document.createElement('a')
         moveLink.innerHTML = text
         moveLink.href = '#'
+        if (direction === 'delete') {
+          moveLink.className = 'delete-link'
+        }
         moveLink.onclick = (event) => {
           event.preventDefault()
           currentFilmRank = event.target.parentElement.parentElement.value
@@ -333,14 +338,21 @@ var FilmList = {
 
       createMoveLink('&#8593; move up', 'up')
       createMoveLink('&#8595; move down', 'down')
+      createMoveLink('&#10006; delete', 'delete')
 
       li.appendChild(movementLinks)
     }
     
     // simple function for finding the correct object in the films array.
-    function getByRank(theArray, value) {
+    function getByRank(theArray, value, returnType) {
       for (var i = 0; i < theArray.length; i++) {
-        if (theArray[i].rank == value) return theArray[i]
+        if (theArray[i].rank === value) {
+          if (returnType === 'index') {
+           return i
+          } else {
+            return theArray[i]
+          }
+        }
       }
     }
   

@@ -53,6 +53,13 @@ span.tags {
 }
 .movement-links a {
   padding-right: 10px;
+  text-decoration: none;
+}
+.movement-links a.delete-link {
+  color: red;
+}
+.movement-links a:hover {
+  text-decoration: underline;
 }
 #list li:hover > .movement-links {
   visibility: visible; 
