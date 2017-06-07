@@ -123,9 +123,12 @@ var FilmList = {
       let numberOfFilms = films.length
 
       function insertFilm() {
-        films.push(new Film(title, director, year, rank))
-        films[numberOfFilms - 1].addToDOM()
-        var addFields = document.querySelectorAll('.add-field')
+        let film = new Film(title, director, year, rank)
+        films.push(film)
+        film.addToDOM()
+
+        // clear field placeholders and values.
+        let addFields = document.querySelectorAll('.add-field')
         for (var i = 0, n = addFields.length; i < n; i++) {
           addFields[i].placeholder = ''
           addFields[i].value = ''
@@ -259,7 +262,7 @@ var FilmList = {
       li.value = this.rank
       
       // if there is a year, add it in parenthesis to the title.
-      if (this.year != undefined && this.year != null && this.year != '') {
+      if (this.year) {
         li.innerHTML += ' (' + this.year + ')'
       }
       // check rank before inserting the list item into the DOM
@@ -302,8 +305,8 @@ var FilmList = {
       }
       
       // if there is a director, add it to the next line of the list item.
-      if (this.director != undefined && this.director != null && this.director != '') {
-        director = document.createElement('span')
+      if (this.director) {
+        let director = document.createElement('span')
         director.className = 'director'
         director.innerHTML = 'directed by ' + this.director
         li.appendChild(document.createElement('br'))
