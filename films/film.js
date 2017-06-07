@@ -120,9 +120,11 @@ var FilmList = {
     }
   
     function addFilm() {
+      let numberOfFilms = films.length
+
       function insertFilm() {
         films.push(new Film(title, director, year, rank))
-        films[films.length - 1].addToDOM()
+        films[numberOfFilms - 1].addToDOM()
         var addFields = document.querySelectorAll('.add-field')
         for (var i = 0, n = addFields.length; i < n; i++) {
           addFields[i].placeholder = ''
@@ -132,7 +134,7 @@ var FilmList = {
 
       var title = document.getElementById('title').value
       // Make sure there is at least a title.
-      if(!title) {
+      if (!title) {
         errorMessage('You need a title.')
         return
       }
@@ -141,14 +143,14 @@ var FilmList = {
       var rank = document.getElementById('rank').value
       
       if (!rank) {
-        // Each Film object will be an indexed property of the films literal object.
+        // Each Film object will be an indexed property of the films array.
         // if the array is empty, the rank should be 1.
-        if (films.length == 0) {
+        if (numberOfFilms === 0) {
           rank = 1
         // find the first non consecutive rank (the hole) and insert, or insert at the end if all ranks are consecutive.
         } else {
-          for (i = 0; i <= films.length; i++) {
-            if (i == films.length || films[i].rank != i+1) {
+          for (i = 0; i <= numberOfFilms; i++) {
+            if (i == numberOfFilms || films[i].rank != i+1) {
               rank = i+1
               break
             }
@@ -161,7 +163,7 @@ var FilmList = {
         if (isNaN(rank) || rank <= 0) {
           errorMessage('Rank must be a positive number.')
           return
-        } else if (films.length == 0 || rank > films[films.length - 1].rank) {
+        } else if (numberOfFilms == 0 || rank > films[numberOfFilms - 1].rank) {
           insertFilm()
         } else {
           var filmToChange = getByRank(films, rank)
@@ -173,7 +175,6 @@ var FilmList = {
           insertFilm()
         }
       }
-      
       // make sure the array is sorted by rank after each addition.
       sortByRank()
     }
@@ -313,7 +314,7 @@ var FilmList = {
       var movementLinks = document.createElement('p')
       movementLinks.className = 'movement-links'
 
-      function createMoveLink(text,direction) {
+      function createMoveLink(text, direction) {
         var moveLink = document.createElement('a')
         moveLink.innerHTML = text
         moveLink.href = '#'
