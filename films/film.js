@@ -12,7 +12,7 @@ var FilmList = {
       for (var i = 0, n = this.length; i < n; i++) {
         if (this[i].rank === value) {
           if (returnType === 'index') {
-           return i
+            return i
           } else {
             return this[i]
           }
@@ -31,7 +31,7 @@ var FilmList = {
       searchOnInput()
     })
 
-    function debounce(fn, ms) {
+    function debounce (fn, ms) {
       let handle
       return () => {
         if (handle) {
@@ -44,17 +44,17 @@ var FilmList = {
       }
     }
 
-    function searchForFilm() {
+    function searchForFilm () {
       let input = document.getElementById('search').value
 
-      function removeSuggestionDropDown() {
+      function removeSuggestionDropDown () {
         let suggestionDropDown = document.getElementById('suggestion-drop-down')
         if (suggestionDropDown) {
           suggestionDropDown.parentElement.removeChild(suggestionDropDown)
         }
       }
 
-      function request(url, callback) {
+      function request (url, callback) {
         let xhr = new XMLHttpRequest()
         xhr.open('GET', url)
         xhr.send()
@@ -95,7 +95,7 @@ var FilmList = {
         }
       }
 
-      var Suggestion = function Suggestion(title, year, id, poster) {
+      var Suggestion = function Suggestion (title, year, id, poster) {
         this.display = title + ' (' + year + ')'
         this.title = title
         this.year = year
@@ -120,7 +120,7 @@ var FilmList = {
 
           let url = 'http://www.omdbapi.com/?apikey=' + FilmList.apikey + '&i=' + this.id
           request(url, processResponse)
-          function processResponse(e) {
+          function processResponse (e) {
             if (this.readyState == 4) {
               var director = JSON.parse(this.responseText).Director
               fields.director.value = director
@@ -131,10 +131,10 @@ var FilmList = {
       }    
     }
   
-    function addFilm() {
+    function addFilm () {
       let numberOfFilms = films.length
 
-      function insertFilm() {
+      function insertFilm () {
         let film = new Film(title, director, year, rank)
         films.push(film)
         film.addToDOM()
@@ -195,7 +195,7 @@ var FilmList = {
     }
   
     // constructor for individual films, as we will make multiple
-    var Film = function Film(title, director, year, rank) {
+    var Film = function Film (title, director, year, rank) {
       // nothing fancy for property initialization.
       // You could do a check to see if title was falsey, but we check it when we click the add button instead.
       this.title = title
@@ -331,7 +331,7 @@ var FilmList = {
       var movementLinks = document.createElement('p')
       movementLinks.className = 'movement-links'
 
-      function createMoveLink(text, direction) {
+      function createMoveLink (text, direction) {
         var moveLink = document.createElement('a')
         moveLink.innerHTML = text
         moveLink.href = '#'
@@ -356,7 +356,7 @@ var FilmList = {
     }
   
     // simple function to find adjacent siblings while avoiding whitespace and other non-elements.
-    function getElementSibling(element, nextOrPrevious){
+    function getElementSibling (element, nextOrPrevious) {
         do {
             element = element[nextOrPrevious]
         } while ( element && element.nodeType !== 1 )
@@ -364,7 +364,7 @@ var FilmList = {
     }
     
     // function produces an error messag within the DOM instead of an alert dialog box.
-    function errorMessage(message) {
+    function errorMessage (message) {
       var element = document.querySelector('p.alert')
       element.innerHTML = message
       element.style.backgroundColor = 'red'
