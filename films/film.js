@@ -165,7 +165,7 @@ var FilmList = {
         // find the first non consecutive rank (the hole) and insert, or insert at the end if all ranks are consecutive.
         } else {
           for (var i = 0; i <= numberOfFilms; i++) {
-            if (i === numberOfFilms || films[i].rank != i + 1) {
+            if (i === numberOfFilms || films[i].rank !== i + 1) {
               rank = i + 1
               break
             }
@@ -240,7 +240,7 @@ var FilmList = {
         filmElement.value += 1
 
       // move the element up in the DOM
-      } else if (filmElement.value != 1) {
+      } else if (filmElement.value !== 1) {
         // get the previous element.
         previousFilmElement = getElementSibling(filmElement, 'previousSibling')
         // if there is a previous element to retrieve, get the object with rank exactly one less than the event target.
@@ -280,15 +280,15 @@ var FilmList = {
       }
       // check rank before inserting the list item into the DOM
       // If its the highest numerical rank, just add it to the end of the list.
-      if (this.rank > films[films.length-1].rank) {
+      if (this.rank > films[films.length - 1].rank) {
         list.appendChild(li)
-        
+
       // if the rank is 1, insert at the top of the list and increase the rank of each item beneath.
-      } else if (this.rank == 1) {
+      } else if (this.rank === 1) {
         var listItems = document.querySelectorAll('#list li')
         var valueCheck = 1
         for (var p in listItems) {
-          if (listItems[p].value != valueCheck) {
+          if (listItems[p].value !== valueCheck) {
             break
           }
           listItems[p].value += 1
@@ -302,7 +302,7 @@ var FilmList = {
         for (var p in listItems) {
           if (listItems[p].value > valueCheck + 1) {
             break
-          } else if (listItems[p].value == valueCheck) {
+          } else if (listItems[p].value === valueCheck) {
             listItems[p].value += 1
             valueCheck++
           }
@@ -356,10 +356,10 @@ var FilmList = {
 
     // simple function to find adjacent siblings while avoiding whitespace and other non-elements.
     function getElementSibling (element, nextOrPrevious) {
-        do {
-            element = element[nextOrPrevious]
-        } while ( element && element.nodeType !== 1 )
-        return element
+      do {
+        element = element[nextOrPrevious]
+      } while (element && element.nodeType !== 1)
+      return element
     }
 
     // function produces an error messag within the DOM instead of an alert dialog box.
