@@ -223,7 +223,7 @@ var FilmList = {
             nextFilmObj.rank -= 1
             if (nextFilmElement.value === this.rank + 1) {
               // get the element after the next element, because we are using insertBefore.
-              secondSibling = nextFilmElement.nextSibling
+              let secondSibling = nextFilmElement.nextSibling
               list.removeChild(filmElement)
               if (secondSibling) {
                 list.insertBefore(filmElement, secondSibling)
@@ -242,7 +242,7 @@ var FilmList = {
       // move the element up in the DOM
       } else if (filmElement.value !== 1) {
         // get the previous element.
-        previousFilmElement = getElementSibling(filmElement, 'previousSibling')
+        let previousFilmElement = getElementSibling(filmElement, 'previousSibling')
         // if there is a previous element to retrieve, get the object with rank exactly one less than the event target.
         if (previousFilmElement) {
           var previousFilmObj = films.getByRank(this.rank - 1)
@@ -339,7 +339,7 @@ var FilmList = {
         }
         moveLink.onclick = (event) => {
           event.preventDefault()
-          currentFilmRank = event.target.parentElement.parentElement.value
+          var currentFilmRank = event.target.parentElement.parentElement.value
           var filmObject = films.getByRank(currentFilmRank)
           filmObject.move(direction)
         }
