@@ -199,16 +199,15 @@ var FilmList = {
       this.year = year
       this.rank = rank
     }
-    
+    Film.prototype.delete = function () {
+      var filmElement = document.querySelector('li[value="' + this.rank + '"]')
+      filmElement.parentElement.removeChild(filmElement)
+      let filmIndex = films.getByRank(this.rank, 'index')
+      films.splice(filmIndex, 1)
+    }
     Film.prototype.move = function (direction) {
       var list = document.getElementById('list')
-      var filmElement = document.querySelector('li[value="' + this.rank + '"]')
-
-      if (direction === 'delete') {
-        filmElement.parentElement.removeChild(filmElement)
-        let filmIndex = films.getByRank(this.rank, 'index')
-        films.splice(filmIndex, 1)
-      } else if (direction === 'down') { // move the element down in the DOM
+      if (direction === 'down') { // move the element down in the DOM
         // get the next element.
         var nextFilmElement = getElementSibling(filmElement, 'nextSibling')
         // if there is a next element to retrieve, get the object with rank exactly one more than the event target.
@@ -256,7 +255,7 @@ var FilmList = {
         this.rank -= 1
         filmElement.value -= 1
       }
-      
+
       films.sortByRank()
     }
 
@@ -325,7 +324,7 @@ var FilmList = {
       var movementLinks = document.createElement('p')
       movementLinks.className = 'movement-links'
 
-      function createMoveLink (text, direction) {
+      function createMoveLink (text, method, direction) {
         var moveLink = document.createElement('a')
         moveLink.innerHTML = text
         moveLink.href = '#'
@@ -336,15 +335,15 @@ var FilmList = {
           event.preventDefault()
           var currentFilmRank = event.target.parentElement.parentElement.value
           var filmObject = films.getByRank(currentFilmRank)
-          filmObject.move(direction)
+          filmObject[method](direction)
         }
         movementLinks.appendChild(moveLink)
         return moveLink
       }
 
-      createMoveLink('&#8593; move up', 'up')
-      createMoveLink('&#8595; move down', 'down')
-      createMoveLink('&#10006; delete', 'delete')
+      createMoveLink('&#8593; move up', 'move', 'up')
+      createMoveLink('&#8595; move down', 'move', 'down')
+      createMoveLink('&#10006; delete', 'delete', 'delete')
 
       li.appendChild(movementLinks)
     }
