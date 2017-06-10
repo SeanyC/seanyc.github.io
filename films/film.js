@@ -102,7 +102,6 @@ var FilmList = {
         this.id = id
         this.poster = poster
       }
-
       Suggestion.prototype.createListItem = function createListItem () {
         let listItem = document.createElement('li')
         listItem.id = this.id
@@ -195,15 +194,12 @@ var FilmList = {
 
     // constructor for individual films, as we will make multiple
     var Film = function Film (title, director, year, rank) {
-      // nothing fancy for property initialization.
-      // You could do a check to see if title was falsey, but we check it when we click the add button instead.
       this.title = title
       this.director = director
       this.year = year
       this.rank = rank
     }
-
-    // method to move the film after it has been inserted
+    
     Film.prototype.move = function (direction) {
       var list = document.getElementById('list')
       var filmElement = document.querySelector('li[value="' + this.rank + '"]')
@@ -260,8 +256,7 @@ var FilmList = {
         this.rank -= 1
         filmElement.value -= 1
       }
-
-      // make sure the array is properly sorted.
+      
       films.sortByRank()
     }
 
@@ -278,11 +273,11 @@ var FilmList = {
       if (this.year) {
         li.innerHTML += ' (' + this.year + ')'
       }
+
       // check rank before inserting the list item into the DOM
-      // If its the highest numerical rank, just add it to the end of the list.
+      // If it's the highest numerical rank, just add it to the end of the list.
       if (this.rank > films[films.length - 1].rank) {
         list.appendChild(li)
-
       // if the rank is 1, insert at the top of the list and increase the rank of each item beneath.
       } else if (this.rank === 1) {
         var listItems = document.querySelectorAll('#list li')
